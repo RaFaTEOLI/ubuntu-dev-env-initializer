@@ -6,5 +6,5 @@ function installHyper() {
 }
 
 function setupHyper() {
-  sudo cp -r config/.hyper.js /home/$CURRENTUSER/.hyper.js
+  sudo cp -r ../config/.hyper.js /home/$CURRENTUSER/.hyper.js
 }
