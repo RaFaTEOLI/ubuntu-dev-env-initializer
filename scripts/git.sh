@@ -22,5 +22,6 @@ function generateSSHKey() {
 }
 
 function gitLogin() {
+  sudo apt-get install gh -y
   gh auth login
 }
