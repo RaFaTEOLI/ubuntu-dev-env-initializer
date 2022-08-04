@@ -22,7 +22,10 @@ sudo apt-get update
 source ./utils/log.sh
 
 # Import scripts
-source ./scripts/*
+for SCRIPT in ./scripts/*; do source $SCRIPT; done 
+
+mkdir cache
+cd cache
 
 # Add sudo permission to your user
 logAction "Adding sudo permission to user: $CURRENTUSER..."
@@ -91,3 +94,8 @@ installYarn
 # Install WebBrowser
 logAction "Installing WebBrowser..."
 chooseBrowser
+
+cd ..
+rm -rf cache
+
+echo "$(tput setaf 3)✅ Finished Initializer Script!"
