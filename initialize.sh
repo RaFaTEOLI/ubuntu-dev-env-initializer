@@ -93,6 +93,10 @@ installYarn
 logAction "Installing WebBrowser..."
 chooseBrowser
 
+# Prompt git login
+logAction "Get ready for GitHub Authentication..."
+gitLogin
+
 # Generate SSH Key for git
 logAction "Generating SSH Key for git..."
 generateSSHKey
