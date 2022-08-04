@@ -2,9 +2,9 @@
 
 function installHyper() {
   wget https://releases.hyper.is/download/deb
-  dpkg -I deb
+  sudo dpkg -i deb
 }
 
 function setupHyper() {
-  cp -r config/.hyper.js /home/$CURRENTUSER/.hyper.js
+  sudo cp -r config/.hyper.js /home/$CURRENTUSER/.hyper.js
 }
