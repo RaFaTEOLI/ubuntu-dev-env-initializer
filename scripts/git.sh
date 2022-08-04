@@ -20,3 +20,7 @@ function generateSSHKey() {
   echo -n "$(tput setaf 5)❓️ Enter a name for your SSH Key:"; read SSHKEYNAME
   gh ssh-key add ~/.ssh/id_ed25519.pub --title $SSHKEYNAME
 }
+
+function gitLogin() {
+  gh auth login
+}
