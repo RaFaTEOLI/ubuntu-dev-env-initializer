@@ -7,7 +7,7 @@ _A complete script that will install and set up everything you need to start dev
 1.  Clone the Repo.
 2.  Run the script: `chmod +x initialize.sh && ./initialize.sh`
 
-> **Note:** Watch out for **PROMPT QUESTIONS** in order to make you script run as intended.
+> **Note:** Watch out for **PROMPT QUESTIONS** in order to make your script run as intended.
 
 > ## Features
 
