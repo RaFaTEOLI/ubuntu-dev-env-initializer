@@ -1,11 +1,13 @@
-# ubuntu-dev-env-initializer
+# Ubuntu Dev Env Initializer
 
-Script that installs and sets up everything you need to start developing on your brand new ubuntu installation
+_A complete script that will install and set up everything you need to start developing on your brand new Ubuntu(or other debian based distro)_
 
 > ## Instructions
 
-- 1 - Clone the repo.
-- 2 - Run the script: `chmod +x initialize.sh && ./initialize.sh`
+1.  Clone the Repo.
+2.  Run the script: `chmod +x initialize.sh && ./initialize.sh`
+
+> **Note:** Watch out for **PROMPT QUESTIONS** in order to make you script run as intended.
 
 > ## Features
 
