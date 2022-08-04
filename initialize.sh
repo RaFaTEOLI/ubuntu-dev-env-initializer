@@ -93,6 +93,10 @@ installYarn
 logAction "Installing WebBrowser..."
 chooseBrowser
 
+# Install Insomnia
+logAction "Installing Insomnia..."
+installInsomnia
+
 # Prompt git login
 logAction "Get ready for GitHub Authentication..."
 gitLogin
