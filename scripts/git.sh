@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function installGit() {
-  sudo apt-get install git-all
+  sudo apt-get install git-all -y
 }
 
 function setupGit() {
