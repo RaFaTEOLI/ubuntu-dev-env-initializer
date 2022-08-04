@@ -5,7 +5,8 @@ function installZsh() {
 }
 
 function installOhMyZsh() {
-  echo -n "$(tput setaf 1)❓️ OH-MY-ZSH will be installed next, REMEMBER TO RUN exit WHEN YOU ENTER OH-MY-ZSH TERMINAL TO RESUME THE SCRIPT!!!! (type any key to continue): "; read KEY
+  echo -e '\n\n'
+  echo -n "$(tput setaf 1)❓️ OH-MY-ZSH will be installed next, $(tput bold)REMEMBER TO RUN $(tput setaf 2)exit$(tput setaf 1) WHEN YOU ENTER OH-MY-ZSH TERMINAL TO RESUME THE SCRIPT!!!!$(tput sgr0) (type any key to continue): "; read KEY
   sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 }
 
