@@ -16,7 +16,9 @@ echo -e '\n\n'
 echo "$(tput setaf 2)💻️ This script will setup a dev enviroment from scratch..."
 echo -e '\n'
 
+# Prepare script
 sudo apt-get update
+sudo apt install curl -y
 
 # Import utils log function
 source ./utils/log.sh
@@ -38,10 +40,6 @@ installGit
 # Setup git
 logAction "Setting up git..."
 setupGit
-
-# Generate SSH Key for git
-logAction "Generating SSH Key for git..."
-generateSSHKey
 
 # Install Hyper.js
 logAction "Installing Hyper.js..."
@@ -94,6 +92,10 @@ installYarn
 # Install WebBrowser
 logAction "Installing WebBrowser..."
 chooseBrowser
+
+# Generate SSH Key for git
+logAction "Generating SSH Key for git..."
+generateSSHKey
 
 cd ..
 rm -rf cache
