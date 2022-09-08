@@ -16,4 +16,5 @@ function installStarship() {
 
 function setupStarship() {
   echo 'eval "$(starship init zsh)"' >> ~/.zshrc
+  echo 'eval "$(starship init bash)"' >> ~/.bashrc
 }
