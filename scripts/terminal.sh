@@ -1,5 +1,11 @@
 #!/bin/bash
 
+function installFish() {
+  sudo apt-add-repository ppa:fish-shell/release-3
+  sudo apt update
+  sudo apt install fish
+}
+
 function installZsh() {
   sudo apt install zsh -y
 }
@@ -15,6 +21,35 @@ function installStarship() {
 }
 
 function setupStarship() {
-  echo 'eval "$(starship init zsh)"' >> ~/.zshrc
+  case $SHELL_CHOICE in
+    1)
+      echo 'starship init fish | source' >> ~/.config/fish/config.fish
+      ;;
+    2)
+      echo 'eval "$(starship init zsh)"' >> ~/.zshrc
+      ;;
+  esac
   echo 'eval "$(starship init bash)"' >> ~/.bashrc
+}
+
+function setupShell() {
+  echo -e "$(tput setaf 5)❓️ Which shell do you want to install?\n$(tput setaf 4)1 - Fish Shell\n2 - ZSH\n$(tput setaf 3)"; read SHELL_CHOICE
+  
+  case $SHELL_CHOICE in
+    1)
+      installFish
+      ;;
+
+    2)
+      installZsh
+      installOhMyZsh
+      ;;
+
+    *)
+      echo -n "Unknown option, ignoring browser installation..."
+      ;;
+  esac
+
+  installStarship
+  setupStarship
 }
