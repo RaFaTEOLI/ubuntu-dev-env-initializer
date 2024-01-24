@@ -13,6 +13,7 @@ _A complete script that will install and set up everything you need to start dev
 
 - [Git](https://git-scm.com/)
 - [OH-MY-ZSH](https://ohmyz.sh/)
+- [FISH](https://fishshell.com/)
 - [Hyper](https://hyper.is/)
 - [Starship](https://starship.rs/)
 - [Docker](https://www.docker.com/)
