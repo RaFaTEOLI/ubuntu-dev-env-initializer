@@ -49,21 +49,9 @@ installHyper
 logAction "Setting up Hyper.js..."
 setupHyper
 
-# Install ZSH
-logAction "Installing ZSH..."
-installZsh
-
-# Install OH-MY-ZSH
-logAction "Installing OH-MY-ZSH..."
-installOhMyZsh
-
-# Install Starship
-logAction "Installing Starship..."
-installStarship
-
-# Setup Starship
-logAction "Setting up Starship..."
-setupStarship
+# Setting Shell
+logAction "Setting Shell..."
+setupShell
 
 # Install Nerd Fonts
 logAction "Installing Nerd Fonts..."
