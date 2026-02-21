@@ -65,6 +65,8 @@ installDocker
 logAction "Installing VSCode..."
 installVSCode
 
+# TODO: Add cursor
+
 # Install Node.JS
 logAction "Installing NodeJS..."
 installNode
