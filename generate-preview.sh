@@ -17,7 +17,6 @@ TEMPLATES="${ROOT}/templates"
 : "${INSTALL_PKG_MANAGER:=}"
 : "${INSTALL_EDITOR:=}"
 : "${INSTALL_EXTRAS:=}"
-: "${INSTALL_BROWSER:=chrome}"
 
 empty_to_null() {
   local v="${1:-}"
@@ -38,7 +37,6 @@ printf "%-22s %s\n" "INSTALL_RUNTIME" "$(empty_to_null "${INSTALL_RUNTIME}")"
 printf "%-22s %s\n" "INSTALL_PKG_MANAGER" "$(empty_to_null "${INSTALL_PKG_MANAGER}")"
 printf "%-22s %s\n" "INSTALL_EDITOR" "$(empty_to_null "${INSTALL_EDITOR}")"
 printf "%-22s %s\n" "INSTALL_EXTRAS" "$(empty_to_null "${INSTALL_EXTRAS}")"
-printf "%-22s %s\n" "INSTALL_BROWSER" "$(empty_to_null "${INSTALL_BROWSER}")"
 echo
 echo "Entry point (run this on the target machine):"
 echo "  ${TEMPLATES}/main.sh"
@@ -69,22 +67,20 @@ esac
 
 case "${INSTALL_RUNTIME}" in
   bun) append_file "${TEMPLATES}/runtime/bun.sh" ;;
-  node) append_file "${TEMPLATES}/runtime/node-nvm.sh" ;;
+  node-nvm) append_file "${TEMPLATES}/runtime/node-nvm.sh" ;;
   deno) append_file "${TEMPLATES}/runtime/deno.sh" ;;
 esac
 
 case "${INSTALL_PKG_MANAGER}" in
   pnpm) append_file "${TEMPLATES}/pkg-manager/pnpm.sh" ;;
-  bun) append_file "${TEMPLATES}/pkg-manager/bun-pm.sh" ;;
-  yarn) append_file "${TEMPLATES}/pkg-manager/yarn-berry.sh" ;;
-  npm) append_file "${TEMPLATES}/pkg-manager/npm.sh" ;;
+  bun) append_file "${TEMPLATES}/pkg-manager/bun.sh" ;;
+  yarn-berry) append_file "${TEMPLATES}/pkg-manager/yarn-berry.sh" ;;
 esac
 
 case "${INSTALL_EDITOR}" in
   vscode) append_file "${TEMPLATES}/editor/vscode.sh" ;;
-  neovim) append_file "${TEMPLATES}/editor/neovim-lazy.sh" ;;
+  neovim-lazy) append_file "${TEMPLATES}/editor/neovim-lazy.sh" ;;
   helix) append_file "${TEMPLATES}/editor/helix.sh" ;;
-  cursor) append_file "${TEMPLATES}/editor/cursor.sh" ;;
 esac
 
 if [[ -n "${INSTALL_EXTRAS}" && "${INSTALL_EXTRAS}" != "none" ]]; then
@@ -94,20 +90,11 @@ if [[ -n "${INSTALL_EXTRAS}" && "${INSTALL_EXTRAS}" != "none" ]]; then
     [[ -z "${_e}" ]] && continue
     case "${_e}" in
       docker) append_file "${TEMPLATES}/common/docker.sh" ;;
-      git) append_file "${TEMPLATES}/common/git.sh" ;;
       starship) append_file "${TEMPLATES}/common/starship.sh" ;;
       nerd-fonts|nerdfonts) append_file "${TEMPLATES}/common/nerd-fonts.sh" ;;
-      tailscale) append_file "${TEMPLATES}/common/extras-tailscale.sh" ;;
-      1password-cli|1password) append_file "${TEMPLATES}/common/extras-1password-cli.sh" ;;
-      rustup) append_file "${TEMPLATES}/common/extras-rustup.sh" ;;
-      go|golang) append_file "${TEMPLATES}/common/extras-go.sh" ;;
-      python|uv) append_file "${TEMPLATES}/common/extras-python.sh" ;;
-      postman) append_file "${TEMPLATES}/common/extras-postman.sh" ;;
-      insomnia) append_file "${TEMPLATES}/common/extras-insomnia.sh" ;;
-      browser) append_file "${TEMPLATES}/common/extras-browser.sh" ;;
-      chrome|edge|firefox|chromium) append_file "${TEMPLATES}/common/extras-browser.sh" ;;
-      user-sudo|sudo-group) append_file "${TEMPLATES}/common/extras-user-sudo.sh" ;;
-      docker-compose) echo "  (note: extra 'docker-compose' → use 'docker' for compose v2 plugin)" ;;
+      tailscale) append_file "${TEMPLATES}/common/tailscale.sh" ;;
+      rustup) append_file "${TEMPLATES}/common/rustup.sh" ;;
+      go) append_file "${TEMPLATES}/common/go.sh" ;;
       *) echo "  (unknown extra: ${_e})" ;;
     esac
   done
