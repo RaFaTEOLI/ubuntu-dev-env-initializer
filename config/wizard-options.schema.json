@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://linux-dev-wizard.local/schema/wizard-options.schema.json",
+  "title": "Linux Dev Wizard Options",
+  "description": "Validated payload schema for frontend wizard -> backend script generation.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "installShell": {
+      "type": "string",
+      "enum": ["none", "zsh", "fish", "bash"],
+      "default": "none"
+    },
+    "installTerminal": {
+      "type": "string",
+      "enum": ["none", "wezterm", "kitty", "alacritty", "hyper"],
+      "default": "none"
+    },
+    "installRuntime": {
+      "type": "string",
+      "enum": ["none", "bun", "node", "deno"],
+      "default": "none"
+    },
+    "installPkgManager": {
+      "type": "string",
+      "enum": ["none", "pnpm", "bun", "yarn", "npm"],
+      "default": "none"
+    },
+    "installEditor": {
+      "type": "string",
+      "enum": ["none", "vscode", "cursor", "neovim", "helix"],
+      "default": "none"
+    },
+    "installExtras": {
+      "type": "array",
+      "description": "Selected extra modules. For direct browser choice, use one of chrome|edge|firefox|chromium. If using browser token, set installBrowser.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "docker",
+          "git",
+          "starship",
+          "nerd-fonts",
+          "nerdfonts",
+          "tailscale",
+          "1password-cli",
+          "1password",
+          "rustup",
+          "go",
+          "golang",
+          "python",
+          "uv",
+          "postman",
+          "insomnia",
+          "browser",
+          "chrome",
+          "edge",
+          "firefox",
+          "chromium",
+          "user-sudo",
+          "sudo-group",
+          "docker-compose"
+        ]
+      },
+      "uniqueItems": true,
+      "default": []
+    },
+    "installBrowser": {
+      "type": "string",
+      "enum": ["chrome", "edge", "firefox", "chromium"],
+      "default": "chrome"
+    }
+  },
+  "required": [
+    "installShell",
+    "installTerminal",
+    "installRuntime",
+    "installPkgManager",
+    "installEditor",
+    "installExtras",
+    "installBrowser"
+  ],
+  "examples": [
+    {
+      "installShell": "zsh",
+      "installTerminal": "wezterm",
+      "installRuntime": "node",
+      "installPkgManager": "pnpm",
+      "installEditor": "cursor",
+      "installExtras": ["docker", "git", "starship", "browser"],
+      "installBrowser": "chrome"
+    }
+  ]
+}

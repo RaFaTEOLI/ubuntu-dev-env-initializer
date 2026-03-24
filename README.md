@@ -12,9 +12,13 @@
 | `templates/base.sh` | Shared helpers: sudo, one-shot `apt-get update`, logging, `LDW_HOME` |
 | `templates/{shell,terminal,runtime,pkg-manager,editor,common}/` | One concern per file; each defines `ldw_*` functions |
 | `generate-preview.sh` | **Dry run**: prints env + list of template files that would be sourced |
+| `generate-script.sh` | **Composer**: emits one standalone script with only selected modules |
+| `templates/registry.sh` | Shared selection map (used by `main.sh`, preview, and composer) |
+| `config/wizard-options.schema.json` | JSON schema for frontend payload validation |
+| `config/frontend-ai-prompt.md` | Prompt template for frontend AI option extraction |
 | `config/` | Optional assets (e.g. `.hyper.js`) referenced via env vars in templates |
 
-Run **`main.sh` on a real system** (VM or container first). **`generate-preview.sh`** never installs anything.
+Run **`main.sh` on a real system** (VM or container first). **`generate-preview.sh`** and **`generate-script.sh`** never install anything.
 
 ---
 
@@ -45,6 +49,18 @@ cd templates
 export INSTALL_SHELL=zsh INSTALL_EXTRAS=docker,git
 ./main.sh
 ```
+
+**3. Build a single generated script (for backend/wizard output)**
+
+```bash
+chmod +x generate-script.sh
+INSTALL_SHELL=zsh INSTALL_TERMINAL=wezterm INSTALL_RUNTIME=node \
+  INSTALL_PKG_MANAGER=pnpm INSTALL_EDITOR=cursor \
+  INSTALL_EXTRAS=docker,git,starship,chrome \
+  ./generate-script.sh ./dist/install-dev-env.sh
+```
+
+Then your backend can return `./dist/install-dev-env.sh` directly to the user.
 
 ---
 
@@ -112,7 +128,54 @@ When `git` is in `INSTALL_EXTRAS`, see **`templates/common/git.sh`** for:
 
 ## Templating and Next.js
 
-Template files may contain placeholders like `{{INSTALL_SHELL}}` for **`envsubst`**, **`sed`**, or string replace in Node. Runtime behavior still follows **`INSTALL_*` env vars** when you run the scripts as-is.
+Template files may contain placeholders like `{{INSTALL_SHELL}}` for **`envsubst`**, **`sed`**, or string replace in Node.
+
+For frontend wizard + backend generation flows:
+
+- Use `INSTALL_*` values from the wizard payload.
+- Call `./generate-script.sh <output-path>` in your backend job/worker.
+- Return the generated standalone script (already reduced to selected modules only).
+- Keep frontend options synchronized with `templates/registry.sh` (single source of truth).
+
+### Frontend schema
+
+Use `config/wizard-options.schema.json` to validate wizard output before backend generation.
+
+Example JSON payload:
+
+```json
+{
+  "installShell": "zsh",
+  "installTerminal": "wezterm",
+  "installRuntime": "node",
+  "installPkgManager": "pnpm",
+  "installEditor": "cursor",
+  "installExtras": ["docker", "git", "browser"],
+  "installBrowser": "chrome"
+}
+```
+
+Map payload fields to env vars for script generation:
+
+- `installShell` -> `INSTALL_SHELL`
+- `installTerminal` -> `INSTALL_TERMINAL`
+- `installRuntime` -> `INSTALL_RUNTIME`
+- `installPkgManager` -> `INSTALL_PKG_MANAGER`
+- `installEditor` -> `INSTALL_EDITOR`
+- `installExtras` -> `INSTALL_EXTRAS` (comma-joined string)
+- `installBrowser` -> `INSTALL_BROWSER`
+
+### Frontend AI prompt
+
+If your frontend uses an LLM to transform natural-language requests into wizard selections, use `config/frontend-ai-prompt.md`.
+
+Recommended flow:
+
+1. Inject the user text into `{{USER_REQUEST}}`.
+2. Ask the model for JSON only.
+3. Validate against `config/wizard-options.schema.json`.
+4. Convert to `INSTALL_*` env vars.
+5. Run `./generate-script.sh` and return the generated script.
 
 ---
 
