@@ -15,7 +15,6 @@
 | `generate-script.sh` | **Composer**: emits one standalone script with only selected modules |
 | `templates/registry.sh` | Shared selection map (used by `main.sh`, preview, and composer) |
 | `config/wizard-options.schema.json` | JSON schema for frontend payload validation |
-| `config/frontend-ai-prompt.md` | Prompt template for frontend AI option extraction |
 | `config/` | Optional assets (e.g. `.hyper.js`) referenced via env vars in templates |
 
 Run **`main.sh` on a real system** (VM or container first). **`generate-preview.sh`** and **`generate-script.sh`** never install anything.
@@ -87,7 +86,7 @@ Unset or empty means **skip** that block (no surprise installs).
 | `docker` | Docker Engine + Compose plugin (official repos) |
 | `git` | Git, Git LFS, optional GitHub CLI (`GIT_INSTALL_GH=yes`), optional SSH (`GIT_SSH_*` — see `templates/common/git.sh`) |
 | `starship` | Starship prompt (respects `INSTALL_SHELL`) |
-| `nerd-fonts` / `nerdfonts` | Nerd Fonts under `~/.local/share/fonts` |
+| `nerd-fonts` | Nerd Fonts under `~/.local/share/fonts` |
 | `tailscale` | Tailscale (official install script) |
 | `1password` / `1password-cli` | 1Password CLI (APT) |
 | `rustup` | Rust via rustup |
@@ -164,18 +163,6 @@ Map payload fields to env vars for script generation:
 - `installEditor` -> `INSTALL_EDITOR`
 - `installExtras` -> `INSTALL_EXTRAS` (comma-joined string)
 - `installBrowser` -> `INSTALL_BROWSER`
-
-### Frontend AI prompt
-
-If your frontend uses an LLM to transform natural-language requests into wizard selections, use `config/frontend-ai-prompt.md`.
-
-Recommended flow:
-
-1. Inject the user text into `{{USER_REQUEST}}`.
-2. Ask the model for JSON only.
-3. Validate against `config/wizard-options.schema.json`.
-4. Convert to `INSTALL_*` env vars.
-5. Run `./generate-script.sh` and return the generated script.
 
 ---
 
