@@ -86,7 +86,7 @@ ldw_registry_plan_modules() {
         docker) ldw_registry_add "${script_dir}/common/docker.sh" "ldw_common_install_docker" ;;
         git) ldw_registry_add "${script_dir}/common/git.sh" "ldw_common_install_git" ;;
         starship) ldw_registry_add "${script_dir}/common/starship.sh" "ldw_common_install_starship" ;;
-        nerd-fonts|nerdfonts) ldw_registry_add "${script_dir}/common/nerd-fonts.sh" "ldw_common_install_nerd_fonts" ;;
+        nerd-fonts) ldw_registry_add "${script_dir}/common/nerd-fonts.sh" "ldw_common_install_nerd_fonts" ;;
         tailscale) ldw_registry_add "${script_dir}/common/extras-tailscale.sh" "ldw_extra_install_tailscale" ;;
         1password-cli|1password) ldw_registry_add "${script_dir}/common/extras-1password-cli.sh" "ldw_extra_install_1password_cli" ;;
         rustup) ldw_registry_add "${script_dir}/common/extras-rustup.sh" "ldw_extra_install_rustup" ;;
